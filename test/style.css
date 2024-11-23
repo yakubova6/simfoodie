@@ -1,0 +1,159 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    max-width: 800px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 30px; /* Отступ от левого края */
+}
+
+.search-container {
+    display: flex;
+    margin-left: auto; /* Выровнять к правому краю */
+}
+
+.search-input {
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+}
+
+.search-button {
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-left: 5px; /* Отступ между полем поиска и кнопкой */
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #218838;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #333;
+}
+
+.info-section {
+    display: flex;
+}
+
+.image-container {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.slider {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.slider-button {
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+
+.image-container img, 
+.menu-container img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.description {
+    flex: 2;
+}
+
+.menu-container {
+    margin-top: 20px;
+}
+
+.menu-gallery {
+    position: relative;
+}
+
+.menu-thumbnails {
+    display: flex;
+    overflow-x: auto;
+    margin-top: 10px;
+}
+
+.thumbnail {
+    width: 100px;
+    height: auto;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.map-container {
+    margin-top: 20px;
+    height: 300px; /* Высота карты */
+    background-color: #e0e0e0; /* Замените на вашу карту */
+}
+
+.review-section {
+    margin-top: 20px;
+    text-align: center; /* Центрирование кнопки отправки */
+}
+
+input, 
+textarea {
+    width: calc(100% - 22px); /* Учитываем отступы */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+textarea {
+    height: 100px; /* Фиксированная высота */
+    resize: none; /* Убираем возможность изменения размера */
+}
+
+#submit-review {
+    width: 100%; /* Устанавливаем ширину кнопки на 100% */
+    padding: 10px 15px; /* Устанавливаем отступы внутри кнопки */
+    background-color: #28a745; /* Цвет фона кнопки */
+    color: white; /* Цвет текста кнопки */
+    border: none; /* Убираем границу */
+    border-radius: 5px; /* Закругленные углы */
+    cursor: pointer; /* Указатель при наведении */
+}
+
+#submit-review:hover {
+    background-color: #218838; /* Цвет фона при наведении */
+}
