@@ -1,7 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const restaurantId = 2; // Замените на нужный ID ресторана
+    const restaurantId = getRestaurantIdFromURL(); // Получаем ID ресторана из URL
 
-    fetch(`http://localhost:3000/api/restaurant?id=${restaurantId}`) // Используем созданный endpoint
+    if (!restaurantId) {
+        console.error('ID ресторана не указан');
+        return; // Завершаем выполнение, если ID не найден
+    }
+
+    fetch(`http://localhost:3000/api/restaurant?id=${restaurantId}`) // Используем ваш endpoint
         .then(response => {
             if (!response.ok) {
                 throw new Error('Сеть не в порядке');
@@ -9,48 +14,61 @@ document.addEventListener('DOMContentLoaded', function() {
             return response.json();
         })
         .then(data => {
-            // Проверяем, что данные пришли корректно
-            console.log(data); // Выводим данные в консоль для проверки
+            console.log(data); // Для проверки
             
             // Обновляем элементы на странице
             document.getElementById('title').innerText = data.name;
+            document.getElementById('description').innerText = data.description || 'Описание заведения отсутствует';
             document.getElementById('address').innerText = `Адрес: ${data.address}`;
-            document.getElementById('establishment-image').src = data.image || 'placeholder-establishment.jpg'; // Изображение по умолчанию
+            document.getElementById('establishment-image').src = data.image || 'placeholder-establishment.jpg';
 
-            // Проверяем, есть ли меню
+            // Проверяем наличие изображения меню
             if (data.menuImage) {
                 document.getElementById('menu-image').src = data.menuImage;
             } else {
-                document.getElementById('menu-image').src = 'placeholder-menu.jpg'; // Замените на изображение по умолчанию
+                document.getElementById('menu-image').src = 'placeholder-menu.jpg';
             }
 
             // Инициализация карты
-            initMap(data.latitude, data.longitude); // Передаем координаты ресторана
+            initMap(data.latitude, data.longitude);
         })
         .catch(error => console.error('Ошибка при получении данных:', error));
 
-    // Функция инициализации карты
+    // Функция для получения ID ресторана из URL
+    function getRestaurantIdFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('id');
+    }
+
+    // Функция инициализации карты для Яндекс.Карт
     function initMap(latitude, longitude) {
-        const map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 10, // Уровень зума
-            center: {lat: latitude || 44.9521, lng: longitude || 34.1028} // Центр карты (по умолчанию Симферополь)
+        // Создаем карту
+        const map = new ymaps.Map('map', {
+            center: [latitude || 44.9521, longitude || 34.1028], // Координаты центра карты
+            zoom: 10 // Уровень масштабирования
         });
 
-        // Добавление маркера на карте
-        new google.maps.Marker({
-            position: {lat: latitude, lng: longitude},
-            map: map,
-            title: 'Ресторан'
+        // Добавляем маркер
+        const placemark = new ymaps.Placemark([latitude, longitude], {
+            balloonContent: 'Ресторан'
         });
+
+        // Добавляем маркер на карту
+        map.geoObjects.add(placemark);
+        
+        // Установка маркера на карту
+        map.setCenter([latitude, longitude], 15); // Установить центр карты и уровень масштабирования
     }
 
     // Обработчик для отправки отзыва
     document.getElementById('submit-review').addEventListener('click', function() {
         const review = document.getElementById('review-text').value;
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
 
-        // Проверка, что поле отзыва не пустое
-        if (!review) {
-            alert('Пожалуйста, напишите отзыв.');
+        // Проверка, что поля отзыва и имени не пустые
+        if (!review || !username || !email) {
+            alert('Пожалуйста, заполните все поля.');
             return;
         }
 
@@ -60,12 +78,14 @@ document.addEventListener('DOMContentLoaded', function() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ review })
+            body: JSON.stringify({ review, username, email, restaurantId }) // Добавляем restaurantId для связи отзыва с рестораном
         })
         .then(response => {
             if (response.ok) {
                 alert('Ваш отзыв отправлен!');
                 document.getElementById('review-text').value = ''; // Очистить поле
+                document.getElementById('username').value = ''; // Очистить поле имени
+                document.getElementById('email').value = ''; // Очистить поле почты
             } else {
                 throw new Error('Ошибка при отправке отзыва');
             }

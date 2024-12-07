@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="style.css">
     <title>SimFoodie</title>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script> <!-- Убедитесь, что добавили ваш API ключ -->
+    <script src="https://api-maps.yandex.ru/v3/?apikey=d601eb63-a3ae-497f-b645-7370a96ef41c&lang=ru_RU" type="text/javascript"></script>
 </head>
 <body>
     <header>
@@ -24,29 +24,13 @@
             <div class="image-container">
                 <div class="slider">
                     <button class="slider-button prev" onclick="changeImage('establishment', -1)">&#10094;</button>
-                    <img id="establishment-image" src="placeholder-establishment1.jpg" alt="Изображение заведения">
+                    <p>Изображение заведения временно недоступно.</p> <!-- Уведомление вместо изображения -->
                     <button class="slider-button next" onclick="changeImage('establishment', 1)">&#10095;</button>
                 </div>
             </div>
             <div class="description">
                 <p id="description">Описание заведения</p>
                 <p id="address">Адрес: г. Город, ул. Улица, д. 1</p>
-            </div>
-        </div>
-        
-        <div class="menu-container">
-            <h2>Меню</h2>
-            <div class="menu-gallery">
-                <div class="slider">
-                    <button class="slider-button prev" onclick="changeImage('menu', -1)">&#10094;</button>
-                    <img id="menu-image" src="placeholder-menu1.jpg" alt="Изображение меню">
-                    <button class="slider-button next" onclick="changeImage('menu', 1)">&#10095;</button>
-                </div>
-                <div class="menu-thumbnails">
-                    <img class="thumbnail" src="placeholder-menu1.jpg" alt="Меню 1" onclick="setMenuImage('placeholder-menu1.jpg')">
-                    <img class="thumbnail" src="placeholder-menu2.jpg" alt="Меню 2" onclick="setMenuImage('placeholder-menu2.jpg')">
-                    <img class="thumbnail" src="placeholder-menu3.jpg" alt="Меню 3" onclick="setMenuImage('placeholder-menu3.jpg')">
-                </div>
             </div>
         </div>
         

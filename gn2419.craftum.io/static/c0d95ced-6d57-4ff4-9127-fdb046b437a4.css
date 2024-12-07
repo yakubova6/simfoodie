@@ -1,0 +1,84 @@
+@media screen and (min-width: 1200px) {
+    #n-8ec3a8e7-2b0c-4466-af39-1bf15b83492e {
+        padding-top: 28px;
+        padding-bottom: 28px;
+    }
+}
+
+#n-5a52d8ea-ee4a-4e17-9031-0d45da8aa17c {
+    color: rgba(33, 33, 33, 1);
+}
+
+#n-b498309d-9340-463c-ace7-6039a5b54a16 {
+    --color: rgba(33, 33, 33, 1);
+    --hover-color: rgba(33, 33, 33, 0.7);
+    --active-color: rgba(33, 33, 33, 0.7);
+}
+
+#n-56877e17-58b4-4680-b5e6-8c3c1acab89d {
+    --color: rgba(33, 33, 33, 1);
+    --hover-color: rgba(33, 33, 33, 0.7);
+    --active-color: rgba(33, 33, 33, 0.7);
+}
+
+#n-060793b9-7753-4a15-b74d-9fd648954e06 {
+    --active-color: rgba(33, 33, 33, 0.7);
+    --color: rgba(33, 33, 33, 1);
+    --hover-color: rgba(33, 33, 33, 0.7);
+}
+
+#n-e2daa844-997f-4404-9838-98bc1dff4bf8 {
+    color: rgba(33, 33, 33, 1);
+}
+
+#n-8d4bfc14-479d-4001-9303-9964c0423e52 {
+    --hover-color: rgba(33, 33, 33, 0.7);
+    --active-color: rgba(33, 33, 33, 0.7);
+    --color: rgba(33, 33, 33, 1);
+}
+
+#n-f2839022-6e8e-4867-bd73-4e517582049a {
+    --color: rgba(33, 33, 33, 1);
+    --hover-color: rgba(33, 33, 33, 0.7);
+    --active-color: rgba(33, 33, 33, 0.7);
+}
+
+#n-0bca92ca-acc1-42d3-97c5-b38028adcc97 {
+    color: rgba(33, 33, 33, 1);
+    font-style: normal;
+    font-family: var(--sans-serif), sans-serif;
+    font-weight: 700;
+}
+
+#n-111c4ebd-52ed-4e71-8c2b-c880ec318182 {
+    --normal-border: 1px solid rgba(222, 0, 36, 1);
+    --normal-background-color: rgba(222, 0, 36, 1);
+}
+
+#n-26e4a6fb-9004-4b0d-a951-6ea554ff77fd {
+    background-image: var(--bg-1920, var(--background-image));
+}
+
+@media screen and (max-width: 1199px) {
+    #n-26e4a6fb-9004-4b0d-a951-6ea554ff77fd {
+        background-image: var(--bg-1199, var(--background-image));
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    #n-26e4a6fb-9004-4b0d-a951-6ea554ff77fd {
+        background-image: var(--bg-1023, var(--background-image));
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #n-26e4a6fb-9004-4b0d-a951-6ea554ff77fd {
+        background-image: var(--bg-767, var(--background-image));
+    }
+}
+
+@media screen and (max-width: 666px) {
+    #n-26e4a6fb-9004-4b0d-a951-6ea554ff77fd {
+        background-image: var(--bg-666, var(--background-image));
+    }
+}

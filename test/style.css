@@ -22,32 +22,33 @@ header {
 .logo {
     font-size: 24px;
     font-weight: bold;
-    margin-left: 30px; /* Отступ от левого края */
+    margin-left: 20px; /* Уменьшаем отступ от левого края */
+    margin-right: 30px; /* Увеличиваем отступ справа */
 }
 
 .search-container {
-    display: flex;
-    margin-left: auto; /* Выровнять к правому краю */
+    display: flex; /* Используем flexbox для выравнивания */
+    margin-left: auto; /* Сдвигаем контейнер поиска вправо */
 }
 
 .search-input {
-    padding: 5px;
-    border: none;
-    border-radius: 5px;
+    width: 170px; /* Установите желаемую ширину */
+    padding: 10px; /* Отступы для удобства ввода */
+    height: 19px; /* Установите фиксированную высоту */
 }
 
 .search-button {
-    padding: 5px 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin-left: 5px; /* Отступ между полем поиска и кнопкой */
-    cursor: pointer;
+    width: 60px; /* Устанавливаем ширину кнопки */
+    height: 41px; /* Устанавливаем такую же высоту, как у поля ввода */
+    padding: 0; /* Убираем отступы, чтобы высота соответствовала */
+    border: none; /* Убираем границу */
+    background-color: #ff0000; /* Цвет фона кнопки */
+    color: white; /* Цвет текста кнопки */
+    cursor: pointer; /* Указатель при наведении */
 }
 
 .search-button:hover {
-    background-color: #218838;
+    background-color: #ff0000; /* Цвет при наведении */
 }
 
 .container {
@@ -136,7 +137,6 @@ textarea {
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
 }
 
 textarea {
@@ -147,7 +147,7 @@ textarea {
 #submit-review {
     width: 100%; /* Устанавливаем ширину кнопки на 100% */
     padding: 10px 15px; /* Устанавливаем отступы внутри кнопки */
-    background-color: #28a745; /* Цвет фона кнопки */
+    background-color: #ff0000; /* Цвет фона кнопки */
     color: white; /* Цвет текста кнопки */
     border: none; /* Убираем границу */
     border-radius: 5px; /* Закругленные углы */
@@ -155,5 +155,5 @@ textarea {
 }
 
 #submit-review:hover {
-    background-color: #218838; /* Цвет фона при наведении */
+    background-color: #ff0000; /* Цвет фона при наведении */
 }

@@ -1,0 +1,43 @@
+@media screen and (min-width: 1200px) {
+    #n-1e7a066a-06e9-43fe-ae7b-74bc383a7b79 {
+        /* font-size: ;
+        line-height: ; */
+    }
+
+    #n-fce6a24a-be8d-4acc-a26d-07e78ab8dcea {
+        padding-top: 120px;
+        padding-bottom: 120px;
+    }
+}
+
+#n-68a74ea7-00d1-4b4b-820c-e91a97f8516d {
+    color: rgba(222, 0, 36, 1);
+}
+
+#n-e11affc8-c1c0-4f1c-b63e-ad1437b3a846 {
+    background-image: var(--bg-1920, var(--background-image));
+}
+
+@media screen and (max-width: 1199px) {
+    #n-e11affc8-c1c0-4f1c-b63e-ad1437b3a846 {
+        background-image: var(--bg-1199, var(--background-image));
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    #n-e11affc8-c1c0-4f1c-b63e-ad1437b3a846 {
+        background-image: var(--bg-1023, var(--background-image));
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #n-e11affc8-c1c0-4f1c-b63e-ad1437b3a846 {
+        background-image: var(--bg-767, var(--background-image));
+    }
+}
+
+@media screen and (max-width: 666px) {
+    #n-e11affc8-c1c0-4f1c-b63e-ad1437b3a846 {
+        background-image: var(--bg-666, var(--background-image));
+    }
+}
