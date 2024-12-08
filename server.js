@@ -47,6 +47,25 @@ app.get('/api/restaurant', (req, res) => {
     );
 });
 
+// Эндпоинт для получения блюд по ID ресторана
+app.get('/api/dishes', (req, res) => {
+    const restaurantId = parseInt(req.query.restaurantId, 10);
+    if (isNaN(restaurantId)) {
+        return res.status(400).json({ error: 'Неверный идентификатор ресторана' });
+    }
+
+    db.query(
+        'SELECT id, name, price FROM dishes WHERE restaurant = ?', 
+        [restaurantId], 
+        (err, results) => {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            res.json(results); // Возвращаем список блюд
+        }
+    );
+});
+
 // Эндпоинт для отправки отзыва
 app.post('/api/reviews', (req, res) => {
     const { restaurant_id, user_name, user_email, content } = req.body; // Получаем необходимые данные

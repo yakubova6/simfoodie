@@ -11,6 +11,26 @@ header {
     padding: 10px 0;
 }
 
+.menu {
+    display: none; /* Скрыто по умолчанию */
+    margin-top: 10px;
+}
+
+.menu-header {
+    cursor: pointer; /* Указываем, что это кликабельный элемент */
+    color: red; /* Цвет текста */
+    font-size: 24px; /* Размер шрифта */
+    font-weight: bold; /* Жирный текст */
+    display: flex; /* Для выравнивания текста и стрелочки */
+    align-items: center; /* Выравнивание по центру */
+    margin-top: 20px; /* Отступ сверху */
+}
+
+.arrow {
+    margin-left: 10px; /* Отступ между текстом и стрелочкой */
+    transition: transform 0.3s ease; /* Плавная анимация */
+}
+
 .navbar {
     display: flex;
     align-items: center;
