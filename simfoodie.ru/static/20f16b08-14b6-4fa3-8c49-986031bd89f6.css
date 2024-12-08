@@ -1,0 +1,44 @@
+@media screen and (min-width: 1200px) {
+    #n-bd1a5490-6dea-43d2-8720-4223f1abdc88 {
+        /* padding-top: ;
+        padding-bottom: ; */
+    }
+
+    #n-68c826ac-d340-4175-9da7-27d019516914 {
+        /* font-size: ;
+        line-height: ; */
+    }
+}
+
+#n-267f5f5f-d2e8-4684-93dc-8b418e7069e4 {
+    --normal-border: 0px solid rgb(0, 0, 255);
+    --normal-background-color: rgba(222, 0, 36, 1);
+}
+
+#n-c13a5fa5-6b19-49da-b700-a3c14de580e3 {
+    background-image: var(--bg-1920, var(--background-image));
+}
+
+@media screen and (max-width: 1199px) {
+    #n-c13a5fa5-6b19-49da-b700-a3c14de580e3 {
+        background-image: var(--bg-1199, var(--background-image));
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    #n-c13a5fa5-6b19-49da-b700-a3c14de580e3 {
+        background-image: var(--bg-1023, var(--background-image));
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #n-c13a5fa5-6b19-49da-b700-a3c14de580e3 {
+        background-image: var(--bg-767, var(--background-image));
+    }
+}
+
+@media screen and (max-width: 666px) {
+    #n-c13a5fa5-6b19-49da-b700-a3c14de580e3 {
+        background-image: var(--bg-666, var(--background-image));
+    }
+}

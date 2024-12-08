@@ -7,17 +7,16 @@ const port = 3000;
 
 // Используем CORS
 app.use(cors());
-app.use(express.json()); // Позволяем обрабатывать JSON в запросах
+app.use(express.json()); 
 
 // Создаем подключение к базе данных
 const db = mysql.createConnection({
     host: 'localhost',
-    user: 'root', // Имя пользователя
-    password: 'RegIs59_', // Ваш пароль
-    database: 'simfoodie' // Имя вашей базы данных
+    user: 'root',
+    password: 'RegIs59_', 
+    database: 'simfoodie' 
 });
 
-// Проверка подключения
 db.connect(err => {
     if (err) {
         console.error('Ошибка подключения: ' + err.stack);
@@ -34,8 +33,8 @@ app.get('/api/restaurant', (req, res) => {
     }
 
     db.query(
-        'SELECT id, name, address, raiting, image, latitude, longitude FROM restaurants WHERE id = ?',
-        [restaurantId],
+        'SELECT id, name, address, image, latitude, longitude, description FROM restaurants WHERE id = ?',
+        [restaurantId], 
         (err, results) => {
             if (err) {
                 return res.status(500).json({ error: err.message });
@@ -50,13 +49,23 @@ app.get('/api/restaurant', (req, res) => {
 
 // Эндпоинт для отправки отзыва
 app.post('/api/reviews', (req, res) => {
-    const { review } = req.body;
+    const { restaurant_id, user_name, user_email, content } = req.body; // Получаем необходимые данные
 
-    // Здесь вы можете добавить код для сохранения отзыва в базу данных
-    // Например:
-    // db.query('INSERT INTO reviews (content) VALUES (?)', [review], (err, results) => { ... });
+    // Проверка на наличие необходимых данных
+    if (!restaurant_id || !user_name || !user_email || !content) {
+        return res.status(400).json({ error: 'restaurant_id, user_name, user_email и content обязательны' });
+    }
 
-    res.status(201).json({ message: 'Отзыв успешно сохранен' });
+    // Запрос для сохранения отзыва в базу данных
+    const sql = 'INSERT INTO reviews (restaurant_id, user_name, user_email, content) VALUES (?, ?, ?, ?)';
+    db.query(sql, [restaurant_id, user_name, user_email, content], (err, results) => {
+        if (err) {
+            console.error('Ошибка при сохранении отзыва:', err);
+            return res.status(500).json({ message: 'Ошибка при сохранении отзыва' });
+        }
+        
+        return res.status(201).json({ message: 'Отзыв успешно сохранен', reviewId: results.insertId });
+    });
 });
 
 // Запуск сервера

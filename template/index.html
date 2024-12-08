@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>SimFoodie</title>
+    <script src="https://api-maps.yandex.ru/v3/?apikey=d601eb63-a3ae-497f-b645-7370a96ef41c&lang=ru_RU" type="text/javascript"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">SimFoodie</div>
+            <div class="search-container">
+                <input type="text" placeholder="Поиск..." class="search-input">
+                <button class="search-button">Поиск</button>
+            </div>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <h1 id="title">Название заведения</h1>
+        <div class="info-section">
+            <div class="image-container">
+                <img id="establishment-image" src="" alt="Изображение заведения" style="max-width: 100%;">
+            </div>
+            <div class="description">
+                <p id="description">Описание заведения</p>
+                <p id="address">Адрес: г. Город, ул. Улица, д. 1</p>
+            </div>
+        </div>
+        
+        <div id="map" class="map-container" style="width: 100%; height: 400px;">
+            <!-- Здесь будет карта -->
+        </div>
+        
+        <div class="review-section">
+            <h2>Оставить отзыв</h2>
+            <input type="text" id="username" placeholder="Ваше имя" required>
+            <input type="email" id="email" placeholder="Ваша почта" required>
+            <textarea id="review-text" placeholder="Ваш отзыв..." required></textarea>
+            <button id="submit-review">Отправить</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+#n-cc02f581-8466-4623-9765-8ee23309b6b1 {
+    --normal-background-color: rgba(222, 0, 36, 1);
+    --normal-border: 1px solid rgba(222, 0, 36, 1);
+}
+
+#n-343db743-9d62-48b2-a23e-346b3d42ad96 {
+    --normal-border: 1px solid rgba(222, 0, 36, 1);
+    --normal-background-color: rgba(222, 0, 36, 1);
+}
+
+#n-59b8740d-0107-4b75-b6db-ac4bd1863e3a {
+    background-image: var(--bg-1920, var(--background-image));
+}
+
+@media screen and (max-width: 1199px) {
+    #n-59b8740d-0107-4b75-b6db-ac4bd1863e3a {
+        background-image: var(--bg-1199, var(--background-image));
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    #n-59b8740d-0107-4b75-b6db-ac4bd1863e3a {
+        background-image: var(--bg-1023, var(--background-image));
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #n-59b8740d-0107-4b75-b6db-ac4bd1863e3a {
+        background-image: var(--bg-767, var(--background-image));
+    }
+}
+
+@media screen and (max-width: 666px) {
+    #n-59b8740d-0107-4b75-b6db-ac4bd1863e3a {
+        background-image: var(--bg-666, var(--background-image));
+    }
+}
