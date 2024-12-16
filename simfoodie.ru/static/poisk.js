@@ -1,4 +1,4 @@
-document.getElementById('searchForm').addEventListener('submit', function(event) {
+document.getElementById('searchForm').addEventListener('submit', function (event) {
     event.preventDefault();
     const dish = document.getElementById('dishInput').value.trim();
     searchRestaurants(dish);
@@ -9,10 +9,10 @@ function searchRestaurants(dish) {
         .then(response => response.json())
         .then(data => {
             const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = ''; 
+            resultsDiv.innerHTML = '';
 
             if (dish) {
-                const filteredRestaurants = data.filter(restaurant => 
+                const filteredRestaurants = data.filter(restaurant =>
                     restaurant.menu.some(item => item.toLowerCase().includes(dish.toLowerCase()))
                 );
 

@@ -12,23 +12,28 @@ header {
 }
 
 .menu {
-    display: none; /* Скрыто по умолчанию */
+    display: none; 
     margin-top: 10px;
 }
 
 .menu-header {
-    cursor: pointer; /* Указываем, что это кликабельный элемент */
-    color: red; /* Цвет текста */
-    font-size: 24px; /* Размер шрифта */
-    font-weight: bold; /* Жирный текст */
-    display: flex; /* Для выравнивания текста и стрелочки */
-    align-items: center; /* Выравнивание по центру */
-    margin-top: 20px; /* Отступ сверху */
+    cursor: pointer; 
+    color: red; 
+    font-size: 24px; 
+    font-weight: bold;
+    display: flex; 
+    align-items: center;
+    margin-top: 20px; 
 }
 
 .arrow {
-    margin-left: 10px; /* Отступ между текстом и стрелочкой */
-    transition: transform 0.3s ease; /* Плавная анимация */
+    margin-left: 10px; 
+    transition: transform 0.3s ease; 
+    transform: scale(0.9); 
+}
+
+.arrow.small {
+    font-size: 20px; 
 }
 
 .navbar {
@@ -51,23 +56,18 @@ header {
     margin-left: auto;
 }
 
-.search-input {
-    width: 170px; 
-    padding: 10px;
-    height: 19px; 
-}
-
-.search-button {
-    width: 60px; 
-    height: 41px; 
-    padding: 0; 
-    border: none; 
-    background-color: #ff0000;
+#search-form button {
+    background-color: red; 
     color: white; 
+    font-size: 15px; 
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 5px; 
     cursor: pointer; 
+    margin-left: 535px; 
 }
 
-.search-button:hover {
+#search-form button:hover {
     background-color: #cc0000; 
 }
 

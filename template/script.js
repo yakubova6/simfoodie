@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async function() {
-    const restaurantId = 15; // Получаем ID ресторана из URL
+    const restaurantId = new URLSearchParams(window.location.search).get('id');
 
     if (!restaurantId) {
         console.error('ID ресторана не указан');
@@ -8,16 +8,9 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Загружаем данные о ресторане
     await loadRestaurantData(restaurantId);
-    // Загружаем меню
-    await loadMenu(restaurantId);
+    // Загружаем меню ресторана
+    await loadMenuData(restaurantId);
 
-    // Получение ID ресторана из URL
-    function getRestaurantIdFromURL() {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get('id');
-    }
-
-    // Функция для загрузки данных о ресторане
     async function loadRestaurantData(restaurantId) {
         try {
             const response = await fetch(`http://localhost:3000/api/restaurant?id=${restaurantId}`);
@@ -26,56 +19,78 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             const data = await response.json();
             console.log(data); // Для проверки
-            
-            // Обновление элементов на странице
+
+            // Проверка наличия необходимых данных
+            if (!data.latitude || !data.longitude) {
+                console.error('Широта и/или долгота не указаны');
+                return;
+            }
+
+            // Отображаем данные на странице
             document.getElementById('title').innerText = data.name;
-            document.getElementById('description').innerText = data.description || 'Описание заведения отсутствует'; 
+            document.getElementById('description').innerText = `Описание заведения: ${data.description || 'Описание заведения отсутствует'}`;
             document.getElementById('address').innerText = `Адрес: ${data.address}`;
             document.getElementById('establishment-image').src = data.image || 'placeholder-establishment.jpg';
 
-            // Инициализация карты
+            // Инициализация карты Яндекс
             initMap(data.latitude, data.longitude);
         } catch (error) {
             console.error('Ошибка при получении данных:', error);
         }
     }
 
-    // Функция для инициализации карты
-    function initMap(latitude, longitude) {
-        const map = new ymaps.Map('map', {
-            center: [latitude || 44.9521, longitude || 34.1028], 
-            zoom: 10 
-        });
-
-        const placemark = new ymaps.Placemark([latitude, longitude], {
-            balloonContent: 'Ресторан'
-        });
-
-        map.geoObjects.add(placemark);
-        map.setCenter([latitude, longitude], 15); 
+    async function loadMenuData(restaurantId) {
+        try {
+            const response = await fetch(`http://localhost:3000/api/menu?id=${restaurantId}`);
+            if (!response.ok) {
+                throw new Error('Ошибка сети при загрузке меню');
+            }
+            const menu = await response.json();
+            console.log('Меню, полученное с сервера:', menu); // Логируем меню
+            displayMenu(menu);
+        } catch (error) {
+            console.error('Ошибка при получении меню:', error);
+        }
     }
 
-    // Функция для загрузки меню из базы данных
-    async function loadMenu(restaurantId) {
-        try {
-            const response = await fetch(`http://localhost:3000/api/dishes?restaurantId=${restaurantId}`);
-            if (!response.ok) {
-                throw new Error('Ошибка загрузки меню');
-            }
-            const dishes = await response.json();
-            const menuElement = document.getElementById('menu');
-            menuElement.innerHTML = ''; // Очищаем текущее содержимое
+    let currentDisplayCount = 5; // Количество блюд, отображаемых изначально
+    const incrementCount = 5; // Количество блюд, добавляемых при нажатии "Показать больше"
 
-            // Добавляем блюда в меню
-            dishes.forEach(dish => {
-                const dishElement = document.createElement('div');
-                dishElement.className = 'menu-item';
-                dishElement.innerText = `${dish.name} - ${dish.price}₽`;
-                menuElement.appendChild(dishElement);
-            });
-        } catch (error) {
-            console.error('Ошибка при загрузке меню:', error);
-            document.getElementById('menu').innerHTML = '<p>Ошибка загрузки меню.</p>';
+    function displayMenu(dishes) {
+        const menuContainer = document.getElementById('menu');
+        menuContainer.innerHTML = ''; // Очищаем контейнер перед добавлением нового меню
+
+        // Ограничиваем количество отображаемых блюд
+        const displayedDishes = dishes.slice(0, currentDisplayCount);
+        
+        displayedDishes.forEach(dish => {
+            const dishElement = document.createElement('div');
+            dishElement.className = 'dish';
+            dishElement.innerHTML = `
+                <div style="color: black; font-size: 1.2em; font-weight: bold;">${dish.name}</div>
+                <p style="margin: 0;">Цена: ${dish.price} руб.</p>
+            `;
+
+            // Добавляем стиль для улучшения читабельности
+            dishElement.style.border = '1px solid #ccc'; // Обводка
+            dishElement.style.padding = '10px'; // Отступы
+            dishElement.style.marginBottom = '10px'; // Отступ между блюдами
+            dishElement.style.borderRadius = '5px'; // Закругленные углы
+            dishElement.style.backgroundColor = '#f9f9f9'; // Цвет фона
+
+            menuContainer.appendChild(dishElement);
+        });
+
+        // Добавляем кнопку "Показать больше", если есть еще блюда
+        if (currentDisplayCount < dishes.length) {
+            const showMoreButton = document.createElement('button');
+            showMoreButton.innerText = 'Показать больше';
+            showMoreButton.style.marginTop = '10px'; // Отступ сверху
+            showMoreButton.onclick = () => {
+                currentDisplayCount += incrementCount; // Увеличиваем количество отображаемых блюд
+                displayMenu(dishes); // Перегружаем меню
+            };
+            menuContainer.appendChild(showMoreButton);
         }
     }
 
@@ -87,7 +102,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (menuElement.style.display === 'none' || menuElement.style.display === '') {
             menuElement.style.display = 'block'; 
             // Загружаем меню только при открытии
-            await loadMenu(restaurantId); 
+            await loadMenuData(restaurantId);
             arrow.style.transform = 'rotate(180deg)'; 
         } else {
             menuElement.style.display = 'none'; 
@@ -95,16 +110,34 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     });
 
-    // Обработчик для отправки отзыва
-    document.getElementById('submit-review').addEventListener('click', async function() {
-        const review = document.getElementById('review-text').value;
+    // Функция для инициализации карты
+    function initMap(latitude, longitude) {
+        ymaps.ready(() => {
+            const myMap = new ymaps.Map("map", {
+                center: [latitude, longitude],
+                zoom: 14 
+            });
+
+            const myPlacemark = new ymaps.Placemark([latitude, longitude], {
+                balloonContent: "Здесь находится заведение"
+            });
+
+            myMap.geoObjects.add(myPlacemark);
+        });
+    }
+
+    // Обработка отправки отзыва
+    document.getElementById('submit-review').addEventListener('click', async () => {
         const username = document.getElementById('username').value;
         const email = document.getElementById('email').value;
+        const reviewText = document.getElementById('review-text').value;
 
-        if (!review || !username || !email) {
-            alert('Пожалуйста, заполните все поля.');
-            return;
-        }
+        const reviewData = {
+            restaurant_id: restaurantId,
+            user_name: username,
+            user_email: email,
+            content: reviewText
+        };
 
         try {
             const response = await fetch('http://localhost:3000/api/reviews', {
@@ -112,24 +145,21 @@ document.addEventListener('DOMContentLoaded', async function() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ 
-                    restaurant_id: restaurantId, 
-                    user_name: username,         
-                    user_email: email,           
-                    content: review              
-                })
+                body: JSON.stringify(reviewData)
             });
 
             if (response.ok) {
-                alert('Ваш отзыв отправлен!');
+                alert('Отзыв успешно отправлен!');
+                // Очистка полей после отправки
+                document.getElementById('username').value = '';
+                document.getElementById('email').value = '';
                 document.getElementById('review-text').value = '';
-                document.getElementById('username').value = ''; 
-                document.getElementById('email').value = ''; 
             } else {
                 throw new Error('Ошибка при отправке отзыва');
             }
         } catch (error) {
             console.error('Ошибка:', error);
+            alert('Не удалось отправить отзыв. Попробуйте позже.');
         }
     });
 });
