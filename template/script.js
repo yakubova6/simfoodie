@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 throw new Error('Сеть не в порядке');
             }
             const data = await response.json();
-            console.log(data); // Для проверки
+            console.log(data); 
 
             // Проверка наличия необходимых данных
             if (!data.latitude || !data.longitude) {
@@ -71,12 +71,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <p style="margin: 0;">Цена: ${dish.price} руб.</p>
             `;
 
-            // Добавляем стиль для улучшения читабельности
-            dishElement.style.border = '1px solid #ccc'; // Обводка
-            dishElement.style.padding = '10px'; // Отступы
-            dishElement.style.marginBottom = '10px'; // Отступ между блюдами
-            dishElement.style.borderRadius = '5px'; // Закругленные углы
-            dishElement.style.backgroundColor = '#f9f9f9'; // Цвет фона
+            // Стили для улучшения читабельности
+            dishElement.style.border = '1px solid #ccc'; 
+            dishElement.style.padding = '10px'; 
+            dishElement.style.marginBottom = '10px'; 
+            dishElement.style.borderRadius = '5px'; 
+            dishElement.style.backgroundColor = '#f9f9f9'; 
 
             menuContainer.appendChild(dishElement);
         });
@@ -85,10 +85,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (currentDisplayCount < dishes.length) {
             const showMoreButton = document.createElement('button');
             showMoreButton.innerText = 'Показать больше';
-            showMoreButton.style.marginTop = '10px'; // Отступ сверху
+            showMoreButton.style.marginTop = '10px'; 
             showMoreButton.onclick = () => {
-                currentDisplayCount += incrementCount; // Увеличиваем количество отображаемых блюд
-                displayMenu(dishes); // Перегружаем меню
+                currentDisplayCount += incrementCount; 
+                displayMenu(dishes); 
             };
             menuContainer.appendChild(showMoreButton);
         }

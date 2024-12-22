@@ -62,14 +62,11 @@
                 document.getElementById('description').innerText += ` ${restaurant.description || 'Описание отсутствует'}`;
                 document.getElementById('address').innerText += ` ${restaurant.address}`;
 
-                // Если необходимо, вы можете загружать меню здесь
-                // loadMenu(restaurant.id);
             } catch (error) {
                 console.error('Ошибка загрузки информации о ресторане:', error);
             }
         }
 
-        // Вызов функции загрузки информации
         loadRestaurantInfo();
     </script>
 </body>
