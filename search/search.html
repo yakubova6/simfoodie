@@ -4,23 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Поиск Ресторанов</title>
+    <title>Поиск Ресторанов и Меню</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f9f9f9;
         }
-        #search-results {
-            margin-top: 20px;
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            width: 100%;
+            margin-left: auto; 
         }
-        .restaurant-item {
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-left: 10px; 
+        }
+        .search-container {
+            display: flex;
+            gap: 10px;
+            margin-right: 40px; 
+        }
+        .search-input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px; 
+            margin: 0; 
+        }
+        .search-results {
+            margin-top: 5px; 
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+        }
+        h1 {
+            margin-left: 10px;
+        }
+        h2 {
+            margin: 0;
+            padding: 10px 0;
+        }
+        .restaurant-item, .menu-item {
             padding: 10px;
             border: 1px solid #ccc;
             margin-bottom: 10px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
-        .restaurant-item:hover {
+        .restaurant-item:hover, .menu-item:hover {
             background-color: #f0f0f0;
+        }
+        .error-message {
+            color: red;
         }
     </style>
 </head>
@@ -29,14 +72,146 @@
         <nav class="navbar">
             <div class="logo">SimFoodie</div>
             <div class="search-container">
-                <input type="text" id="search-input" placeholder="Поиск..." class="search-input">
+                <input type="text" id="restaurant-search-input" placeholder="Поиск ресторанов..." class="search-input">
+                <input type="text" id="menu-search-input" placeholder="Поиск меню..." class="search-input">
             </div>
         </nav>
     </header>
     <div class="container">
         <h1>Результаты поиска</h1>
-        <div id="search-results"></div> <!-- Контейнер для результатов поиска -->
+        
+        <div class="search-results">
+            <h2>Рестораны</h2>
+            <div id="restaurant-search-results"></div> <!-- Контейнер для результатов поиска ресторанов -->
+            <div class="error-message" id="restaurant-error-message"></div> 
+        </div>
+        
+        <div class="search-results">
+            <h2>Меню</h2>
+            <div id="menu-search-results"></div> <!-- Контейнер для результатов поиска меню -->
+            <div class="error-message" id="menu-error-message"></div> 
+        </div>
     </div>
-    <script src="script.js" defer></script> 
+
+    <script>
+        // Обработчик события ввода в поле поиска ресторанов
+        document.getElementById('restaurant-search-input').addEventListener('input', function() {
+            const query = this.value.trim();
+            const errorMessageDiv = document.getElementById('restaurant-error-message');
+            errorMessageDiv.innerHTML = ''; // Очищаем предыдущее сообщение об ошибке
+
+            if (query.length > 2) {
+                fetch(`http://localhost:3000/api/search?q=${encodeURIComponent(query)}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Ошибка сети');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Полученные данные для ресторанов:', data);
+                        displayRestaurantResults(data);
+                    })
+                    .catch(error => {
+                        console.error('Ошибка:', error);
+                        errorMessageDiv.innerHTML = 'Произошла ошибка при загрузке данных о ресторанах.';
+                    });
+            } else {
+                document.getElementById('restaurant-search-results').innerHTML = ''; // Очищаем результаты, если запрос слишком короткий
+            }
+        });
+
+        // Общая функция для отображения ресторанов
+        function displayRestaurants(restaurants, resultsDivId) {
+            const resultsDiv = document.getElementById(resultsDivId);
+            resultsDiv.innerHTML = ''; // Очищаем предыдущие результаты
+
+            if (!Array.isArray(restaurants)) {
+                resultsDiv.innerHTML = '<p>Ошибка получения данных.</p>';
+                return;
+            }
+
+            if (restaurants.length === 0) {
+                resultsDiv.innerHTML = '<p>Рестораны не найдены.</p>';
+                return;
+            }
+
+            restaurants.forEach(restaurant => {
+                const restaurantItem = document.createElement('div');
+                restaurantItem.className = 'restaurant-item';
+                restaurantItem.innerHTML = `
+                    <h3>${restaurant.name}</h3>
+                    <p>Адрес: ${restaurant.address}</p>
+                    <p>Описание: ${restaurant.description || 'Нет описания'}</p>
+                    <img src="${restaurant.image || 'placeholder-image.jpg'}" alt="${restaurant.name}" style="width: 100px; height: auto;">
+                `;
+
+                // Добавляем обработчик события клика для перехода на страницу ресторана
+                restaurantItem.addEventListener('click', () => {
+                    window.location.href = `/template/restaurant.html?id=${restaurant.id}`; 
+                });
+
+                resultsDiv.appendChild(restaurantItem);
+            });
+        }
+
+        // Функция для отображения результатов поиска ресторанов
+        function displayRestaurantResults(restaurants) {
+            displayRestaurants(restaurants, 'restaurant-search-results');
+        }
+
+        // Обработчик события ввода в поле поиска меню
+        document.getElementById('menu-search-input').addEventListener('input', function() {
+            const query = this.value.trim();
+            const errorMessageDiv = document.getElementById('menu-error-message');
+            errorMessageDiv.innerHTML = ''; // Очищаем предыдущее сообщение об ошибке
+
+            if (query.length > 2) {
+                fetch(`http://localhost:3000/api/menu/search?q=${encodeURIComponent(query)}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Ошибка сети');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Полученные данные для меню:', data);
+                        displayMenuResults(data);
+                    })
+                    .catch(error => {
+                        console.error('Ошибка:', error);
+                        errorMessageDiv.innerHTML = 'Произошла ошибка при загрузке данных о меню.';
+                    });
+            } else {
+                document.getElementById('menu-search-results').innerHTML = ''; // Очищаем результаты, если запрос слишком короткий
+            }
+        });
+
+        function displayMenuResults(menuItems) {
+    const resultsDiv = document.getElementById('menu-search-results');
+    resultsDiv.innerHTML = ''; // Очищаем предыдущие результаты
+
+    if (!Array.isArray(menuItems)) {
+        resultsDiv.innerHTML = '<p>Ошибка получения данных.</p>';
+        return;
+    }
+
+    if (menuItems.length === 0) {
+        resultsDiv.innerHTML = '<p>Блюда не найдены.</p>';
+        return;
+    }
+
+    menuItems.forEach(menuItem => {
+        const menuItemDiv = document.createElement('div');
+        menuItemDiv.className = 'menu-item';
+        menuItemDiv.innerHTML = `
+            <h3>${menuItem.name}</h3>
+            <p><strong>Ресторан:</strong> ${menuItem.restaurant_name}</p>
+            <p><strong>Цена:</strong> ${menuItem.price}₽</p>
+        `;
+        resultsDiv.appendChild(menuItemDiv);
+    });
+}
+    </script>
 </body>
 </html>
